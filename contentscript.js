@@ -32,10 +32,19 @@ function findAndReplace(searchText, replacement, searchNode) {
             })();
         parent.insertBefore(frag, currentNode);
         parent.removeChild(currentNode);
+		
+		//onclick function
+		parent.onclick = function(){
+			chrome.extension.sendRequest({greeting: "hello"}, function(response) { //request
+			  console.log(response.farewell);           //receive response
+			});
+			
+			this.innerHTML = "hello";
+		}
     }
 }
 
-console.log("running");
+console.log("versa running");
 
 //sort strings by longest first...
 function compareStringLengths ( a, b ) {
@@ -43,18 +52,18 @@ function compareStringLengths ( a, b ) {
     return 1;
   if ( a.length > b.length )
     return -1;
-  return 0; // a and b are the same length
+	
+  return 0; 
 }
 
 var words = [ 'I', 'you', "know", "I'm"];
+var dictionary = { 'I' : "ibertT", 'you': "youbert", "know": "knowbert", "I'm": "I'mBERT"};
+
 words.sort ( compareStringLengths );
 
+var style = 'style = "background-color:#CFF6FF;border-radius: 4px;';
+
 findAndReplace('\\b(' + words.join('|') + ')\\b', function(term){
-	return '<a href="javascript:void(0)" onclick="tester">'+term+"</a>";
+	return '<span '+style+' data = "'+term+'" >'+dictionary[term]+"</span>";
 });
 
-function tester(){
-chrome.extension.sendRequest({greeting: "hello"}, function(response) { //request
-  console.log(response.farewell);           //receive response
-});
-}
