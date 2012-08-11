@@ -36,9 +36,25 @@ function findAndReplace(searchText, replacement, searchNode) {
 }
 
 console.log("running");
-// Just an example:
-var searchTerm = "have";
 
-    findAndReplace('\\b' + searchTerm + '\\b', function(term){
-        return '!!!monkey!!!!'+term;
-    });
+//sort strings by longest first...
+function compareStringLengths ( a, b ) {
+  if ( a.length < b.length )
+    return 1;
+  if ( a.length > b.length )
+    return -1;
+  return 0; // a and b are the same length
+}
+
+var words = [ 'I', 'you', "know", "I'm"];
+words.sort ( compareStringLengths );
+
+findAndReplace('\\b(' + words.join('|') + ')\\b', function(term){
+	return '<a href="javascript:void(0)" onclick="tester">'+term+"</a>";
+});
+
+function tester(){
+chrome.extension.sendRequest({greeting: "hello"}, function(response) { //request
+  console.log(response.farewell);           //receive response
+});
+}
