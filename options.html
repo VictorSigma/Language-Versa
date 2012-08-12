@@ -1,19 +1,41 @@
-<html>
-<head><title>Language Versa Options</title></head>
-<script type="text/javascript" src="jquery/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="jquery/jquery-ui-1.8.22.custom.min.js"></script>
-<script type="text/javascript" src="options.js"></script>
+<!doctype html>
+<head>
+	<title>Language Versa Options</title>
+	<script src="jquery/jquery-1.7.2.min.js"></script>
+	<script src="jquery/jquery-ui-1.8.22.custom.min.js"></script>
+	<script src="options.js"></script>
+	<link rel="stylesheet" href="options.css"/>
+</head>
 <body>
-<ul id="sortable">
-	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
-	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
-	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
-	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
-	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
-	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
-	<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
-</ul>
 
-<button onclick="save_options()">Save</button>
+	<header>
+		<p>THis is the header</p>
+	</header>
+	<div id="main">
+	
+		<section id = "words" >
+			<ul id="sortable">
+
+			</ul>
+			
+			<button class = "add" >Add Word</button>
+		</section>
+
+	</div>
+	<div id="sidebar">
+	
+		<section id = "exclude" >
+			<h2>Exclude Site</h2>
+			<button class = "add" >Add site</button>
+			
+			<ul>
+				
+			</ul>
+		</section>
+	
+	</div>
+	<footer>
+		<p>THis is the header</p>
+	</footer>
 </body>
 </html>

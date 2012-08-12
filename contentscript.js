@@ -29,11 +29,8 @@ function findAndReplace(searchText, replacement, searchNode) {
 				
 					//onclick function for each element
 					wrap.firstChild.onclick = function(){
-						chrome.extension.sendRequest({greeting: "hello"}, function(response) { //request
-						  console.log(response.farewell);           //receive response
-						});
-						
-						this.innerHTML = "testing";
+						this.innerHTML = wrap.innerHTML;
+						return false;
 					}
 				
                     frag.appendChild(wrap.firstChild);
@@ -45,7 +42,7 @@ function findAndReplace(searchText, replacement, searchNode) {
     }
 }
 
-console.log("versa running");
+
 
 //sort strings by longest first...
 function compareStringLengths ( a, b ) {
@@ -57,15 +54,47 @@ function compareStringLengths ( a, b ) {
   return 0; 
 }
 
-var dictionary = { 'I' : "ibertT", 'you': "youbert", "know": "knowbert", "I'm": "I'mBERT", "2": "2perps", "eps": "eperror" };
+//////////////////////////////////
 
-var words = [ 'I', 'you', "know", "I'm" , "2", "eps"];
-words.sort ( compareStringLengths );
+console.log("versa running");
+
+chrome.extension.sendRequest({method: "getSettings"}, function(settings) {
+
+	for (var i = 0; i < settings.excluded_sites.length; i++) {
+		
+		//console.log(settings.excluded_sites[i]);
+		
+		var escaped = settings.excluded_sites[i].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+		
+		var re = new RegExp( settings.excluded_sites[i], "i");
+		
+		
+		if (window.location.href.search(re) > -1){
+			console.log("This site is excluded!");
+			return;
+		}
+		
+	}
+	
+	var dictionary = settings.dictionary;
+	var words = settings.words;
+	
+	console.log(dictionary);
+	console.log(words);
+
+	
+	
+	words.sort ( compareStringLengths );
 
 
-var style = 'style = "background-color:#CFF6FF;border-radius: 4px;';
+	var style = 'style = "background-color:#CFF6FF;border-radius: 4px;';
 
-findAndReplace('\\b(' + words.join('|') + ')\\b', function(term){
-	return '<span ' + style + ' data = "' + term + '" >' + dictionary[term] + "</span>";
+	findAndReplace('\\b(' + words.join('|') ')\\b', function(term){
+		return '<span ' + style + ' data = "' + term + '" >' + dictionary[term] + "</span>";
+	});
+	
+	
+
 });
+
 
