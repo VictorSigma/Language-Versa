@@ -1,3 +1,5 @@
+console.log("CONTENT SCRIPT READY");
+
 //Made with the help of...
 //http://james.padolsey.com/javascript/find-and-replace-text-with-javascript/
 function findAndReplace(searchText, replacement, searchNode) {
@@ -10,6 +12,7 @@ function findAndReplace(searchText, replacement, searchNode) {
         childNodes = (searchNode || document.body).childNodes,
         cnLength = childNodes.length,
         excludes = 'html,head,style,title,link,script,object,iframe';
+		
     while (cnLength--) {
         var currentNode = childNodes[cnLength];
         if (currentNode.nodeType === 1 &&
@@ -29,7 +32,9 @@ function findAndReplace(searchText, replacement, searchNode) {
 				
 					//onclick function for each element
 					wrap.firstChild.onclick = function(){
-						this.innerHTML = wrap.innerHTML;
+						console.log(this);
+						this.innerHTML =  this.getAttribute("data-term");
+						
 						return false;
 					}
 				
@@ -56,45 +61,36 @@ function compareStringLengths ( a, b ) {
 
 //////////////////////////////////
 
-console.log("versa running");
+console.log("Language-Versa running");
 
 chrome.extension.sendRequest({method: "getSettings"}, function(settings) {
-
+	/*
 	for (var i = 0; i < settings.excluded_sites.length; i++) {
-		
-		//console.log(settings.excluded_sites[i]);
-		
+
 		var escaped = settings.excluded_sites[i].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-		
 		var re = new RegExp( settings.excluded_sites[i], "i");
 		
-		
 		if (window.location.href.search(re) > -1){
-			console.log("This site is excluded!");
+			console.log("This site is excluded from Language-Versa!");
 			return;
 		}
-		
 	}
 	
 	var dictionary = settings.dictionary;
 	var words = settings.words;
-	
-	console.log(dictionary);
-	console.log(words);
-
-	
-	
+		
 	words.sort ( compareStringLengths );
 
+	var style = 'style = "background-color:#CFF6FF;border-radius: 4px;"';
 
-	var style = 'style = "background-color:#CFF6FF;border-radius: 4px;';
-
-	findAndReplace('\\b(' + words.join('|') ')\\b', function(term){
-		return '<span ' + style + ' data = "' + term + '" >' + dictionary[term] + "</span>";
+	findAndReplace('\\b(' + words.join('|') + ')\\b', function(term){
+		return '<span ' + style + ' data-term = "' + term + '" >' + dictionary[term] + "</span>";
 	});
 	
-	
+	console.log(dictionary);
+	*/
 
 });
 
+console.log("Language-Versa done.");
 

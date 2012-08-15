@@ -1,81 +1,58 @@
+console.log("OPTIONS READY");
+
+var bck = chrome.extension.getBackgroundPage();
+
 $(function() {
 
-	
-	var excluded_sites = {};
-	
-	if (localStorage["excluded_sites"] != undefined)
-		excluded_sites = JSON.parse(localStorage["excluded_sites"]);
-		
-	for (var index in excluded_sites) {
-		$("section#exclude ul").append('<li> <input type="text" value = "'+excluded_sites[index]+'" ><a class = "remove-list-item" href = "#" >x</a> </li> ');
+	function markup_exclude_li(value){
+		return '<li> <input type="text" value = "'+value+'" ><a class = "remove-list-item" href = "#" >x</a> </li>';
 	}
 	
-	$( "section#exclude .add" ).click(function(){
-		$("section#exclude ul").append('<li> <input type="text" ><a class = "remove-list-item" href = "#" >x</a> </li> ');
-	});
+	function markup_words_li(term, definition){
+		return '<li> <input class = "term" type="text" value = "'+term+'" > = <input value = "'+definition+'" class = "definition" type="text" ><a class = "remove-list-item" href = "#" >x</a> </li> ';
+	}
+
+
+	if (bck.options.excluded_sites != undefined)
+		for (var i = 0; i< bck.options.excluded_sites.length; i++) {
+			$('section#exclude ul').append(markup_exclude_li(bck.options.excluded_sites[i]));
+		}
+	
+	if (bck.options.dictionary != undefined)
+		for (var term in bck.options.dictionary) {
+			$("section#words ul").append(markup_words_li(term, bck.options.dictionary[term]));
+		}
+
+	
+	//events
+	
+	$( "section#exclude .add" ).click(function(){ $("section#exclude ul").append(markup_exclude_li(''));});
+	
+	function update_exclude_list(){
+		var temp = [];
+	
+		$("section#exclude li").each(function(){
+			temp.push($(this).find("input").val());
+		});
+
+		bck.options.excluded_sites = temp;
+		bck.save();
+	}
 	
 	$("section#exclude").on("click", ".remove-list-item" ,function(event){
 		$(this).parent().remove();
-		
-		var temp = {};
-		
-		$("section#exclude ul li").each(function(index){
-			temp[index] = $(this).find('input').val();
-		});
-		
-		excluded_sites = temp;
-		localStorage["excluded_sites"] = JSON.stringify(excluded_sites);
+		update_exclude_list();
 		return false;
 	});
 	
 	$("section#exclude").on("propertychange keyup input", "input" ,function(event){
-	
-		excluded_sites[$(this).parent().index()] = this.value;
-		localStorage["excluded_sites"] = JSON.stringify(excluded_sites);
-		
+		update_exclude_list();
 		return false;
 	});
 	
 	/////////
 	
-	var dictionary = {};
-	
-	if (localStorage["dictionary"] != undefined)
-		dictionary = JSON.parse(localStorage["dictionary"]);
-		
-	for (var term in dictionary) {
-		$("section#words ul").append('<li> <input class = "term" type="text" value = "'+term+'" > = <input value = "'+dictionary[term]+'" class = "definition" type="text" ><a class = "remove-list-item" href = "#" >x</a> </li> ');
-	}
-	
-	$( "section#words #sortable" ).sortable({
-		update: function(event, ui) { 
-		
-			dictionary = {};
-		
-			$("section#words li").each(function(){
-				dictionary[$(this).find(".term").val()] = $(this).find(".definition").val();
-			});
-
-			localStorage["dictionary"] = JSON.stringify(dictionary);		
-		}
-	});
-	
-	$( "section#words #sortable" ).disableSelection();
-	
-	$( "section#words .add" ).click(function(){
-		$("section#words ul").append('<li> <input class = "term" type="text" > = <input class = "definition" type="text" ><a class = "remove-list-item" href = "#" >x</a> </li> ');
-	});
-	
-	
-	$("section#words").on("propertychange keyup input", "input" ,updateWordList);
-	
-	$("section#words").on("click", ".remove-list-item" ,function(event){
-		$(this).parent().remove();
-		updateWordList();
-		return false;
-	});
-	
-	function updateWordList(){
+	function update_word_list(){
 		dictionary = {};
 	
 		$("section#words li").each(function(){
@@ -83,8 +60,31 @@ $(function() {
 				dictionary[$(this).find(".term").val()] = $(this).find(".definition").val();
 		});
 
-		localStorage["dictionary"] = JSON.stringify(dictionary);
+		bck.options.dictionary = dictionary;
+		bck.save();
 	}
+	
+	
+	$( "section#words #sortable" ).sortable({
+		update: function(event, ui) { update_word_list(); }
+	});
+	
+	$( "section#words #sortable" ).disableSelection();
+	
+	$( "section#words .add" ).click(function(){
+		$("section#words ul").append(markup_words_li('', ''));
+	});
+	
+
+	$("section#words").on("propertychange keyup input", "input" ,update_word_list);
+	
+	$("section#words").on("click", ".remove-list-item" ,function(event){
+		$(this).parent().remove();
+		update_word_list();
+		return false;
+	});
+	
+	
 
 });
 
