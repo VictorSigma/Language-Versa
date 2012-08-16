@@ -1,6 +1,12 @@
 console.log("BACKGROUND READY");
 
 var options = {};
+
+//intialize default values
+options.dictionary = {};
+options.words = [];
+options.excluded_sites = ["google.com/search"];
+
 if (localStorage["options"] != undefined)
 	options = JSON.parse(localStorage["options"]);
 

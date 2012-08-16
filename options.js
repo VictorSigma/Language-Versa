@@ -28,45 +28,41 @@ $(function() {
 	
 	$( "section#exclude .add" ).click(function(){ $("section#exclude ul").append(markup_exclude_li(''));});
 	
-	function update_exclude_list(){
-		var temp = [];
+	function update(){
+		
 	
+		bck.options.excluded_sites = [];
 		$("section#exclude li").each(function(){
-			temp.push($(this).find("input").val());
+			bck.options.excluded_sites.push($(this).find("input").val());
+		});
+		
+		bck.options.dictionary = {};
+		bck.options.words = [];
+	
+		$("section#words li").each(function(){
+			if ($(this).find(".term").val() != '' ){
+				bck.options.dictionary[$(this).find(".term").val()] = $(this).find(".definition").val();
+				bck.options.words.push($(this).find(".term").val());
+			}
 		});
 
-		bck.options.excluded_sites = temp;
 		bck.save();
+		
+		return false;
 	}
 	
 	$("section#exclude").on("click", ".remove-list-item" ,function(event){
 		$(this).parent().remove();
-		update_exclude_list();
+		update();
 		return false;
 	});
 	
-	$("section#exclude").on("propertychange keyup input", "input" ,function(event){
-		update_exclude_list();
-		return false;
-	});
+	$("section#exclude").on("propertychange keyup input", "input" ,update);
 	
 	/////////
 	
-	function update_word_list(){
-		dictionary = {};
-	
-		$("section#words li").each(function(){
-			if ($(this).find(".term").val() != '' )
-				dictionary[$(this).find(".term").val()] = $(this).find(".definition").val();
-		});
-
-		bck.options.dictionary = dictionary;
-		bck.save();
-	}
-	
-	
 	$( "section#words #sortable" ).sortable({
-		update: function(event, ui) { update_word_list(); }
+		update: function(event, ui) { update(); }
 	});
 	
 	$( "section#words #sortable" ).disableSelection();
@@ -76,11 +72,11 @@ $(function() {
 	});
 	
 
-	$("section#words").on("propertychange keyup input", "input" ,update_word_list);
+	$("section#words").on("propertychange keyup input", "input" ,update);
 	
 	$("section#words").on("click", ".remove-list-item" ,function(event){
 		$(this).parent().remove();
-		update_word_list();
+		update();
 		return false;
 	});
 	

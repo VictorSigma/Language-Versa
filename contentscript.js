@@ -11,7 +11,7 @@ function findAndReplace(searchText, replacement, searchNode) {
                 new RegExp(searchText, 'g') : searchText,
         childNodes = (searchNode || document.body).childNodes,
         cnLength = childNodes.length,
-        excludes = 'html,head,style,title,link,script,object,iframe';
+        excludes = 'html,head,style,title,link,script,object,iframe,input';
 		
     while (cnLength--) {
         var currentNode = childNodes[cnLength];
@@ -49,26 +49,19 @@ function findAndReplace(searchText, replacement, searchNode) {
 
 
 
-//sort strings by longest first...
-function compareStringLengths ( a, b ) {
-  if ( a.length < b.length )
-    return 1;
-  if ( a.length > b.length )
-    return -1;
-	
-  return 0; 
-}
-
 //////////////////////////////////
 
 console.log("Language-Versa running");
 
-chrome.extension.sendRequest({method: "getSettings"}, function(settings) {
-	/*
-	for (var i = 0; i < settings.excluded_sites.length; i++) {
+chrome.extension.sendRequest({method: "getOptions"}, function(options) {
+	
+	console.log(options);
+	
 
-		var escaped = settings.excluded_sites[i].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-		var re = new RegExp( settings.excluded_sites[i], "i");
+	for (var i = 0; i < options.excluded_sites.length; i++) {
+
+		var escaped = options.excluded_sites[i].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+		var re = new RegExp( options.excluded_sites[i], "i");
 		
 		if (window.location.href.search(re) > -1){
 			console.log("This site is excluded from Language-Versa!");
@@ -76,19 +69,28 @@ chrome.extension.sendRequest({method: "getSettings"}, function(settings) {
 		}
 	}
 	
-	var dictionary = settings.dictionary;
-	var words = settings.words;
-		
-	words.sort ( compareStringLengths );
-
-	var style = 'style = "background-color:#CFF6FF;border-radius: 4px;"';
-
-	findAndReplace('\\b(' + words.join('|') + ')\\b', function(term){
-		return '<span ' + style + ' data-term = "' + term + '" >' + dictionary[term] + "</span>";
-	});
 	
-	console.log(dictionary);
-	*/
+	if (options.words != undefined && options.words.length > 0){
+		
+		var word_list = options.words.slice();
+		
+		word_list.sort (function ( a, b ) {
+		  if ( a.length < b.length )
+			return 1;
+		  if ( a.length > b.length )
+			return -1;
+			
+		  return 0; 
+		});
+
+		var style = 'style = "background-color:#CFF6FF;border-radius: 4px;"';
+
+		findAndReplace('\\b(' + word_list.join('|') + ')\\b', function(term){
+			return '<span ' + style + ' data-term = "' + term + '" >' + options.dictionary[term] + "</span>";
+		});
+	}
+	
+
 
 });
 
