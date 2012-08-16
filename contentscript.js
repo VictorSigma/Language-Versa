@@ -32,9 +32,8 @@ function findAndReplace(searchText, replacement, searchNode) {
 				
 					//onclick function for each element
 					wrap.firstChild.onclick = function(){
-						console.log(this);
 						this.innerHTML =  this.getAttribute("data-term");
-						
+						chrome.extension.sendRequest({method: "nuke_word_exposure"}, function() {});
 						return false;
 					}
 				
@@ -53,7 +52,7 @@ function findAndReplace(searchText, replacement, searchNode) {
 
 console.log("Language-Versa running");
 
-chrome.extension.sendRequest({method: "getOptions"}, function(options) {
+chrome.extension.sendRequest({method: "get_options"}, function(options) {
 	
 	console.log(options);
 	
@@ -72,7 +71,7 @@ chrome.extension.sendRequest({method: "getOptions"}, function(options) {
 	
 	if (options.words != undefined && options.words.length > 0){
 		
-		var word_list = options.words.slice();
+		var word_list = options.words.slice(0, options.words_shown);
 		
 		word_list.sort (function ( a, b ) {
 		  if ( a.length < b.length )
@@ -83,11 +82,18 @@ chrome.extension.sendRequest({method: "getOptions"}, function(options) {
 		  return 0; 
 		});
 
+		
+		var word_exposure = false;
 		var style = 'style = "background-color:#CFF6FF;border-radius: 4px;"';
 
 		findAndReplace('\\b(' + word_list.join('|') + ')\\b', function(term){
+			word_exposure = true;
 			return '<span ' + style + ' data-term = "' + term + '" >' + options.dictionary[term] + "</span>";
 		});
+		
+		if (word_exposure){
+			chrome.extension.sendRequest({method: "word_exposure"}, function(options) {});
+		}
 	}
 	
 
