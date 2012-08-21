@@ -12,5 +12,9 @@ $(function() {
 		bck.save();
 		chrome.tabs.reload();
 		
+		//chrome.tabs.create({
+			//url: "options.html"
+}		//)
+		
 	});
 });
