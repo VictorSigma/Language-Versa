@@ -2,42 +2,7 @@
 <html>
   <head>
     <title>Language Versa Popup</title>
-    <style>
-		body {
-		  font-family: "Lucida Grande", Verdana, Arial, sans-serif, Helvetica;
-		}
-
-		.checkbox {
-		  cursor: pointer;
-		  display: block;
-		  width: 94px;
-		  height: 27px;
-		  overflow: hidden;
-		  border-radius: 3px;
-		}	
-
-		input[type=checkbox] {
-		  display: none;
-		}
-
-		input[type=checkbox] + label {
-		  cursor: pointer;
-		  text-indent: -9999px;
-		  display: block;
-		  width: 150px;
-		  height: 27px;
-		  line-height: 27px;
-		  background: transparent url(sprite2.png) no-repeat -56px 0;
-		  -webkit-transition: background-position 0.3s ease-in-out;
-		  -moz-transition: background-position 0.3s ease-in-out;
-		}
-
-		input[type=checkbox]:checked + label {
-		  -webkit-transition: background-position 0.3s ease-in-out;
-		  -moz-transition: background-position 0.3s ease-in-out;
-		  background-position: -3px 0;
-		}
-    </style>
+    <link rel="stylesheet" href="popup.css">
 	<script src="jquery/jquery-1.7.2.min.js"></script>
     <script src="popup.js"></script>
   </head>
@@ -49,6 +14,13 @@
 		</div>
   
 		<HR>
+		<a href = "#" class = "options" > Options </a>
+		<HR>
+		<input type="text" class="exclude_url" />
+		<button class = "add" >Exclude site</button>
+		<HR>
+
+		You are are currently learning <span class = "word_count">#</span> words. Approximatly <span class = "page_views">#</span> page views until we add a new word.
 
   </body>
 </html>
