@@ -16,6 +16,9 @@
   "background": {
     "scripts": ["background.js"]
   },
+  "permissions": [
+    "tabs"
+  ],
   "content_scripts": [
     {
       "run_at": "document_end",

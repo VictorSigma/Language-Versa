@@ -56,46 +56,46 @@ chrome.extension.sendRequest({method: "get_options"}, function(options) {
 	
 	console.log(options);
 	
+	if (options.enabled){
 
-	for (var i = 0; i < options.excluded_sites.length; i++) {
-
-		var escaped = options.excluded_sites[i].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-		var re = new RegExp( options.excluded_sites[i], "i");
-		
-		if (window.location.href.search(re) > -1){
-			console.log("This site is excluded from Language-Versa!");
-			return;
-		}
-	}
-	
-	
-	if (options.words != undefined && options.words.length > 0){
-		
-		var word_list = options.words.slice(0, options.words_shown);
-		
-		word_list.sort (function ( a, b ) {
-		  if ( a.length < b.length )
-			return 1;
-		  if ( a.length > b.length )
-			return -1;
+		for (var i = 0; i < options.excluded_sites.length; i++) {
+			var escaped = options.excluded_sites[i].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+			var re = new RegExp( options.excluded_sites[i], "i");
 			
-		  return 0; 
-		});
-
+			if (window.location.href.search(re) > -1){
+				console.log("This site is excluded from Language-Versa!");
+				return;
+			}
+		}
 		
-		var word_exposure = false;
-		var style = 'style = "background-color:#CFF6FF;border-radius: 4px;"';
-
-		findAndReplace('\\b(' + word_list.join('|') + ')\\b', function(term){
-			word_exposure = true;
-			return '<span ' + style + ' data-term = "' + term + '" >' + options.dictionary[term] + "</span>";
-		});
 		
-		if (word_exposure){
-			chrome.extension.sendRequest({method: "word_exposure"}, function(options) {});
+		if (options.words != undefined && options.words.length > 0){
+			
+			var word_list = options.words.slice(0, options.words_shown);
+			
+			word_list.sort (function ( a, b ) {
+			  if ( a.length < b.length )
+				return 1;
+			  if ( a.length > b.length )
+				return -1;
+				
+			  return 0; 
+			});
+
+			
+			var word_exposure = false;
+			var style = 'style = "background-color:#CFF6FF;border-radius: 4px;"';
+
+			findAndReplace('\\b(' + word_list.join('|') + ')\\b', function(term){
+				word_exposure = true;
+				return '<span ' + style + ' data-term = "' + term + '" >' + options.dictionary[term] + "</span>";
+			});
+			
+			if (word_exposure){
+				chrome.extension.sendRequest({method: "word_exposure"}, function(options) {});
+			}
 		}
 	}
-	
 
 
 });

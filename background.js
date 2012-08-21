@@ -3,6 +3,7 @@ console.log("BACKGROUND READY");
 var options = {};
 
 //intialize default values
+options.enabled = true;
 options.dictionary = {};
 options.words = [];
 options.excluded_sites = ["google.com/search"];
