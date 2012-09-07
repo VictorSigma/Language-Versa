@@ -1,5 +1,9 @@
 body {
+
 	font-family: "Lucida Grande", Verdana, Arial, sans-serif, Helvetica;
+	font-size:10px;
+	color:black;
+	background:white url('imgs/striped.png') repeat right top;
 }
 
 .checkbox {
