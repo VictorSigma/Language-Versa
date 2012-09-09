@@ -9,7 +9,7 @@ $(function() {
 	}
 	
 	function markup_words_li(term, definition){
-		return '<li> <input class = "term" type="text" value = "'+term+'" > = <input value = "'+definition+'" class = "definition" type="text" ><a class = "remove-list-item" href = "#" >x</a> </li> ';
+		return '<li class = "icon" data-icon = "\\" > <input  class = "term" type="text" value = "'+term+'" > = <input value = "'+definition+'" class = "definition" type="text" ><a data-icon = "x" class = "icon remove-list-item" href = "#" ></a> </li> ';
 	}
 
 
