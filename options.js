@@ -15,18 +15,28 @@ $(function() {
 	//Add exclude list markup
 	if (bck.options.excluded_sites != undefined)
 		for (var i = 0; i< bck.options.excluded_sites.length; i++) {
+		
 			$('section#exclude ul').append(markup_exclude_li(bck.options.excluded_sites[i]));
 		}
 	
 	//Add word list
 	$("section#words ul").append('<li data-icon = ")" class = "unsortable icon unmoveable" ><span>Active Words</span></li>');
 	
-	if (bck.options.dictionary != undefined)
+	if (bck.options.dictionary != undefined){
+		
+		var i = 0;
+		
 		for (var term in bck.options.dictionary) {
+			
+			if (i ==  bck.options.words_shown)
+				$("section#words ul").append('<li data-icon = "B" class = "unsortable  icon " ><span>Word Que</span></li>');
+			
 			$("section#words ul").append(markup_words_li(term, bck.options.dictionary[term]));
+			
+			i++;
 		}
 	
-	$("section#words ul").append('<li data-icon = "B" class = "unsortable  icon " ><span>Word Que</span></li>');
+	}
 	
 	//events
 	
