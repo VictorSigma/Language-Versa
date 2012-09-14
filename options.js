@@ -25,13 +25,19 @@ $(function() {
 	if (bck.options.dictionary != undefined){
 		
 		var i = 0;
+		var appended = false;
 		
 		for (var term in bck.options.dictionary) {
 			
-			if (i ==  bck.options.words_shown)
-				$("section#words ul").append('<li data-icon = "B" class = "unsortable  icon " ><span>Word Que</span></li>');
+			var word_que_markup = '<li data-icon = "B" class = "unsortable  icon word-que " ><span>Word Que</span></li>';
+			
+			if (bck.options.words_shown < 2 && i < 1  )
+				$("section#words ul").append(word_que_markup);
 			
 			$("section#words ul").append(markup_words_li(term, bck.options.dictionary[term]));
+			
+			if (i ==  bck.options.words_shown - 2  )
+				$("section#words ul").append(word_que_markup);
 			
 			i++;
 		}
@@ -53,13 +59,18 @@ $(function() {
 		bck.options.dictionary = {};
 		bck.options.words = [];
 	
-		$("section#words li").each(function(){
+		$("section#words li").each(function(index){
 			if ($(this).find(".term").val() != ''  && $(this).find(".term").val() != undefined){
 				bck.options.dictionary[$(this).find(".term").val()] = $(this).find(".definition").val();
 				bck.options.words.push($(this).find(".term").val());
 			}
+			
+			if ($(this).hasClass('word-que'))
+				bck.options.words_shown = index;
 		});
 
+		console.log(bck.options.words_shown);
+		
 		bck.save();
 		
 		return false;

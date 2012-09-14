@@ -43,6 +43,16 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 });
 
 
+/*
+
+slowly adding word functionality
+stats (you are learning x words) and icons
+backup
+chrome sync?
+chinese defaults
+paywall
+style popup
+*/
 
 
 
