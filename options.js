@@ -53,7 +53,7 @@ $(function() {
 	
 	//events
 	
-	$("#toggles input").bind("propertychange keyup input", function(){bck.options.max_word_exposure = (parseInt($(this).val()) || 24);});
+	$("#toggles input").bind("propertychange keyup input", function(){bck.options.max_word_exposure = (parseInt($(this).val()) || 24);bck.save();});
 	
 
 	
@@ -83,6 +83,7 @@ $(function() {
 			
 				if (confirm("Are you sure? This will clear your wordlist.")){
 					bck.options = sub;
+					bck.save();
 					window.location.reload();
 				}
 			}
@@ -138,6 +139,9 @@ $(function() {
 	
 	$( "section#words .add" ).click(function(){
 		$("section#words ul").append(markup_words_li('', ''));
+		
+		if ($('#words ul').children().length == 60 || $('#words ul').children().length == 100 || $('#words ul').children().length == 200)
+			alert("If you have found this extension helpfule please consider donating. Thanks! It helps us make improvements.");
 	});
 	
 
