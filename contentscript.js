@@ -64,7 +64,11 @@ chrome.extension.sendRequest({method: "get_options"}, function(options) {
 			
 			if (window.location.href.search(re) > -1){
 				console.log("This site is excluded from Language-Versa!");
+				
+				chrome.extension.sendRequest({method: "blocked"}, function(options) {});
 				return;
+			}else{
+				chrome.extension.sendRequest({method: "unblocked"}, function(options) {});
 			}
 		}
 		
@@ -82,9 +86,8 @@ chrome.extension.sendRequest({method: "get_options"}, function(options) {
 			  return 0; 
 			});
 
-			
 			var word_exposure = false;
-			var style = 'style = "background-color:#CFF6FF;border-radius: 4px;"';
+			var style = 'style = "'+options.css+'"';
 
 			findAndReplace('\\b(' + word_list.join('|') + ')\\b', function(term){
 				word_exposure = true;

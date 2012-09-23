@@ -8,11 +8,13 @@ options.dictionary = {};
 options.words = [];
 options.excluded_sites = ["google.com/search"];
 options.word_exposure = 0;
+options.max_word_exposure = 24;
 options.words_shown = 1;
+options.css = 'background-color:#CFF6FF;border-radius: 4px;';
 
 if (localStorage["options"] != undefined)
 	options = JSON.parse(localStorage["options"]);
-
+	
 function save(){
 	localStorage["options"] = JSON.stringify(options);
 }
@@ -25,7 +27,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		options.word_exposure += 1;
 		
 		
-		if (options.word_exposure >= 10){
+		if (options.word_exposure >= options.max_word_exposure){
 			options.word_exposure = 0;
 			options.words_shown += 1;
 		}
@@ -36,6 +38,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		options.word_exposure = 0;
 		save();
 		sendResponse({});
+	}else if(request.method == "blocked"){
+		chrome.browserAction.setIcon({path:'imgs/blocked.png'});
+		console.log("HDSFSDFS");
+		sendResponse({});
+	}else if(request.method == "unblocked"){
+		chrome.browserAction.setIcon({path:'imgs/icon.png'});
+		sendResponse({});
 	}
 	else sendResponse({}); // snub them.
 	
@@ -44,18 +53,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
 
 /*
-
-slowly adding word functionality
-stats (you are learning x words) and icons
-backup
 chrome sync?
+style popup
+
+blocked icon for sites that are blocked from language
 chinese defaults
 paywall
-style popup
+remove all console logs
+change description in manifest
 */
 
-
-
-
-
-//

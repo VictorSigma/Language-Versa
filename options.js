@@ -1,8 +1,13 @@
 console.log("OPTIONS READY");
 
 var bck = chrome.extension.getBackgroundPage();
-
+console.log(bck);
 $(function() {
+
+            
+
+	$('.tooltip').hover( function(){$(this).children().css('display','block');}, function(){$(this).children().css('display','none');} )
+
 
 	function markup_exclude_li(value){
 		return '<li> <input type="text" value = "'+value+'" ><a data-icon = "x" class = "remove-list-item icon" href = "#" ></a> </li>';
@@ -44,7 +49,47 @@ $(function() {
 	
 	}
 	
+	$('#toggles input').val(bck.options.max_word_exposure);
+	
+	
 	//events
+	
+	$("#toggles input").bind("propertychange keyup input", function(){bck.options.max_word_exposure = (parseInt($(this).val()) || 24);});
+	
+
+	
+	$("#toggles .backup").click(function(){
+		$("#toggles .save").slideDown();
+		$("#toggles .save textarea").focus(function() {
+			var $this = $(this);
+			$this.select();
+
+			// Work around Chrome's little problem
+			$this.mouseup(function() {
+				// Prevent further mouseup intervention
+				$this.unbind("mouseup");
+				return false;
+			});
+		});
+		$("#toggles .save textarea").text(JSON.stringify(bck.options));
+	});
+	
+		
+	$("#toggles .load").click(function(){
+		$("#toggles .loads").slideDown();
+		$("#toggles .confirm").click(function(){
+			var sub = JSON.parse($("#toggles .loads textarea").val());
+			
+			if (sub && sub.words){
+			
+				if (confirm("Are you sure? This will clear your wordlist.")){
+					bck.options = sub;
+					window.location.reload();
+				}
+			}
+		});
+	});
+	
 	
 	$( "section#exclude .add" ).click(function(){ $("section#exclude ul").append(markup_exclude_li(''));});
 	

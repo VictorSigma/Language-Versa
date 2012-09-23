@@ -10,10 +10,10 @@
 <body>
 
 	<header>
-		<p>THis is the header</p>
+		<img src = "imgs/icon48.png" >
 	</header>
 	<div id="main">
-		<h2 class = "icon" data-icon="z" id = "word-list" > Word List</h1>
+		<h2 class = "icon" data-icon="z" id = "word-list" > Word List <span class = "tooltip">?<span>The word list is divided into two parts. The 'Active Words' and 'Word Que'. 'Active Words' are words that are replaced whenever you visit a site. The 'Word Que' are words that are next up to be added to the 'Active Words' list. The default words uses Simplified Chinese but you can use any language you like.</span></a></h1>
 		<section id = "words" >
 			<ul id="sortable">
 
@@ -25,18 +25,9 @@
 	</div>
 	<div id="sidebar">
 		
-		<section id = "stats" >
-			<h2 class = "icon" data-icon="6"  id = "stats" >Stats</h2>
-			<p>
-				Stuck in the office
-			</p>
-		</section>
-		
 		<section id = "exclude" >
-			<h2 class = "icon" data-icon="x"  id = "exclude" >Excluded Sites</h2>
-			<p>Theses sites are excluded from Language-versa.</p>
-			
-			
+			<h2 class = "icon" data-icon="x"  id = "exclude" >Excluded Sites<span class = "tooltip">?<span>Sites included here are excluded from word replacement. Partial matches are also excluded. For example if someone entered 'red'. Then 'reddit.com', 'alfred.com', and 'redsite.com' would be excluded from word replacement. Similarly if someone entered 'reddit.com' then all reddit.com subdomains and domains would be excluded (for instance reddit.com/r/music and http://www.reddit.com/r/pics would be excluded). 'google.com/search' is disabled by default since this extension seems not to play nicely.</span></a></h2>
+
 			<ul>
 				
 			</ul>
@@ -46,10 +37,24 @@
 	
 		<section id ="toggles">
 			<h2 class = "icon" data-icon="%"  id = "exclude" >Options</h2>
-			<p class="checkbox"><input type="checkbox" name="check1"> Enable Word Que </p>
-			<p class="checkbox"><input type="checkbox" name="check2"> </p>
-			<p class="checkbox"><input type="checkbox" name="check3"> </p>
-			<p class="checkbox"><input type="checkbox" name="check4"> </p>
+			
+			<p class="checkbox">Approximatly <input class = "page_views"> page views until we add a new word.</p>
+			<hr>
+			
+			<button class = "backup" >Save Backup</button>
+			<button class = "load" >Load Previous Save</button>
+			
+			<div class = "save" >
+				<p>Copy and paste this text into a text file. </p>
+				<textarea>Some text</textarea>
+			</div>
+			
+			<div class = "loads" >
+				<p>Paste your previous save into the textbox and hit confirm. </p>
+				<textarea></textarea>
+				<button class = "confirm" >Confirm</button>
+			</div>
+			
 		</section>
 	</div>
 	<footer>

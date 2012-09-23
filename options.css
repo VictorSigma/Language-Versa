@@ -31,7 +31,7 @@ a:hover {
 	background:#369;
 	text-decoration:none;
 }
-h1, h2, h3 {
+h1, h2{
 	font-family: 'Source Sans Pro', sans-serif;
 	text-transform: uppercase;
 	margin: 0;
@@ -45,6 +45,21 @@ h1, h2, h3 {
 	background: #444;
 	text-indent: 10px;
 	
+}
+
+
+h3{
+	font-family: 'Source Sans Pro', sans-serif;
+	margin: 0;
+
+	color:white;
+	width:100%;
+	padding: 4px 0px;
+
+	text-shadow: 1px 1px #555;
+	font-size: 12px;
+	background: #444;
+	text-indent: 10px;
 }
 
 
@@ -99,7 +114,9 @@ img {
 header {
 	clear:both;
 	float:left;
-	width:100%;
+	width:90%;
+	text-align:right;
+	height: 45px;
 }
 
 section{
@@ -172,8 +189,12 @@ footer p {
 	cursor: move;
 }
 
+#words li.unmoveable{
+	cursor: auto;
+}
+
 #words li.unsortable{
-cursor: auto;
+
 text-align:center;
 -webkit-box-shadow: inset 0 0 8px rgba(0,0,0, 0.1);
 background: #fff;
@@ -222,3 +243,37 @@ background: #fff;
 	margin-left: 10px;
 	width: 70%;
 }
+
+
+.tooltip{
+	font: 10px sans-serif;
+	color: yellow;
+	margin-left: 5px;
+	border-bottom: 1px solid yellow;
+	cursor: help;
+	position:relative;
+	top: -2px;
+	text-transform: none;
+} 
+
+.tooltip span{
+	display: block;
+	width: 90%;
+	display: none;
+	padding: 15px;
+	
+}
+
+#toggles input{
+	max-width: 15px;
+}
+
+#toggles textarea {
+	margin: 10px;
+	width: 90%;
+}
+
+#toggles .save, #toggles .loads{
+	display: none;
+}
+
