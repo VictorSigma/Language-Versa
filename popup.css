@@ -26,7 +26,7 @@ input[type=checkbox] + label {
 	width: 150px;
 	height: 27px;
 	line-height: 27px;
-	background: transparent url(sprite2.png) no-repeat -56px 0;
+	background: transparent url(imgs/slider.png) no-repeat -56px 0;
 	-webkit-transition: background-position 0.3s ease-in-out;
 	-moz-transition: background-position 0.3s ease-in-out;
 }
@@ -43,3 +43,28 @@ textarea:focus,
 a:focus {
     outline: none;
 }
+
+a.options{
+	float: right;
+	position: relative;
+	top: -23px;
+}
+
+
+button{
+	border: 1px solid #333;
+	background: #333;
+	color: white;
+	cursor: pointer;
+	padding: 7px 10px;
+	font-weight: bold;
+	border-radius: 2px;
+	width: 100%;
+}
+
+.exclude{
+	color: red;
+	font-weight: bold;
+	display:none;
+}
+

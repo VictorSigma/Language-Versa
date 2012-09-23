@@ -1,7 +1,6 @@
-console.log("OPTIONS READY");
 
 var bck = chrome.extension.getBackgroundPage();
-console.log(bck);
+
 $(function() {
 
             
@@ -114,8 +113,6 @@ $(function() {
 				bck.options.words_shown = index;
 		});
 
-		console.log(bck.options.words_shown);
-		
 		bck.save();
 		
 		return false;

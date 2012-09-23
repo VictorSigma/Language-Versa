@@ -173,13 +173,12 @@ footer p {
 }
 
 #words ul .icon:before, #exclude ul .icon:before {
-	font: 32px 'ModernPictogramsNormal', Arial, sans-serif;
+	font: 24px 'ModernPictogramsNormal', Arial, sans-serif;
 	margin: 0 5px;
 	position: relative;: 
-	top: 3px;
 	color: #555;
 	opacity: .2;
-	top: 4px;
+	top: 2px;
 }
 
 
@@ -187,6 +186,11 @@ footer p {
 
 #words li{
 	cursor: move;
+	padding-bottom: 0;
+}
+
+#words ul li.icon:before {
+	top: -5px;
 }
 
 #words li.unmoveable{
@@ -200,6 +204,10 @@ text-align:center;
 background: #fff;
 
 	background:black url('imgs/striped_light.png') repeat right top;
+}
+
+#words ul li.icon.unsortable:before {
+	top: 0px;
 }
 
 #words li.unsortable span{
@@ -217,7 +225,7 @@ background: #fff;
 	text-indent: 	-999em;
 }
 #words .remove-list-item:before , #exclude .remove-list-item:before{ 
-	font: 32px 'ModernPictogramsNormal', Arial, sans-serif;
+	font: 24px 'ModernPictogramsNormal', Arial, sans-serif;
 	margin-right: 9px;
 	display: block;
 	height: 0;
@@ -228,6 +236,7 @@ background: #fff;
 
 #words input{
 	width: 35%;
+	height: 4px;
 }
 
 #words span.transform{
@@ -236,7 +245,7 @@ background: #fff;
 	text-indent: 0px;
 	opacity: .1;
 	position: relative;
-	top: 3px;
+	top: -4px;
 }
 
 #exclude li input{

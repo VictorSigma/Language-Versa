@@ -1,5 +1,3 @@
-console.log("CONTENT SCRIPT READY");
-
 //Made with the help of...
 //http://james.padolsey.com/javascript/find-and-replace-text-with-javascript/
 function findAndReplace(searchText, replacement, searchNode) {
@@ -50,12 +48,8 @@ function findAndReplace(searchText, replacement, searchNode) {
 
 //////////////////////////////////
 
-console.log("Language-Versa running");
-
 chrome.extension.sendRequest({method: "get_options"}, function(options) {
-	
-	console.log(options);
-	
+
 	if (options.enabled){
 
 		for (var i = 0; i < options.excluded_sites.length; i++) {
@@ -63,8 +57,6 @@ chrome.extension.sendRequest({method: "get_options"}, function(options) {
 			var re = new RegExp( options.excluded_sites[i], "i");
 			
 			if (window.location.href.search(re) > -1){
-				console.log("This site is excluded from Language-Versa!");
-				
 				chrome.extension.sendRequest({method: "blocked"}, function(options) {});
 				return;
 			}else{
@@ -103,5 +95,5 @@ chrome.extension.sendRequest({method: "get_options"}, function(options) {
 
 });
 
-console.log("Language-Versa done.");
+
 
